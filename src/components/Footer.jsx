@@ -63,6 +63,12 @@ const ChatbotFooter = ({
       display={"flex"}
       align={"center"}
       justifyContent={"center"}
+      sx={{
+        position: "sticky",
+        bottom: 0,
+        background: "#f1f2f9",
+        marginBottom: "10px",
+      }}
     >
       {/* {Chatbot Input bar} */}
       <Input

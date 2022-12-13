@@ -5,82 +5,68 @@ import { customAnimation, initialMessage, URL } from "../utils/constant";
 import axios from "axios";
 import { Box } from "@chakra-ui/react";
 
-function Chatbot() {
+function Chatbot({ questions }) {
   const url = URL;
+  let formatedQuestions = questions.map((item) => ({
+    from: "Computer",
+    text: item,
+  }));
+  // console.log("questions are", formatedQuestions);
+  // const apiCall = () => {
+  //   const lastMessage = messages[messages?.length - 1];
+  //   if (lastMessage?.isQuickReply && !lastMessage?.isInitialMessage) {
+  //     return axios
+  //       .post(url, { text: lastMessage?.text })
+  //       .then((result) => {
+  //         const text = result?.data?.data?.fulfillmentText;
+  //         const quickReplies = result?.data?.data?.quickReplies; // to show quick replies buttons
+  //         text?.map((item) =>
+  //           setMessages((old) => [
+  //             ...old,
+  //             {
+  //               from: "computer",
+  //               text:
+  //                 item ||
+  //                 "Sorry i am facing a technical glitch, please checkout our website for more details about our services",
+  //               quickReplies: quickReplies,
+  //             },
+  //           ])
+  //         );
+  //       })
+  //       .catch((err) => {
+  //         setMessages((old) => [
+  //           ...old,
+  //           { from: "computer", text: "Sorry i am currently offline" },
+  //         ]);
+  //       });
+  //   }
+  // };
 
-  const apiCall = () => {
-    const lastMessage = messages[messages?.length - 1];
-    if (lastMessage?.isQuickReply && !lastMessage?.isInitialMessage) {
-      return axios
-        .post(url, { text: lastMessage?.text })
-        .then((result) => {
-          const text = result?.data?.data?.fulfillmentText;
-          const quickReplies = result?.data?.data?.quickReplies; // to show quick replies buttons
-          text?.map((item) =>
-            setMessages((old) => [
-              ...old,
-              {
-                from: "computer",
-                text:
-                  item ||
-                  "Sorry i am facing a technical glitch, please checkout our website for more details about our services",
-                quickReplies: quickReplies,
-              },
-            ])
-          );
-        })
-        .catch((err) => {
-          setMessages((old) => [
-            ...old,
-            { from: "computer", text: "Sorry i am currently offline" },
-          ]);
-        });
-    }
-  };
-
-  const [messages, setMessages] = useState([initialMessage]); // initialMessage is initial templete message of chatbot
+  const [messages, setMessages] = useState([formatedQuestions[0]]); // initialMessage is initial templete message of chatbot
   const [inputMessage, setInputMessage] = useState(""); // input message state manager
 
-  useEffect(() => {
-    apiCall();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messages?.length]); // calles the api when ever new message received.
+  let answersLength = messages.filter((item) => item.from === "me");
 
   // send button handler
   const handleSendMessage = () => {
     if (!inputMessage.trim().length) {
       return;
     }
+    if (answersLength.length == formatedQuestions.length) {
+      return;
+    }
     const data = inputMessage;
-
     setMessages((old) => [...old, { from: "me", text: data }]);
     setInputMessage("");
 
-    // calles the api on click of enter
-    axios
-      .post(url, { text: data })
-      .then((result) => {
-        const text = result?.data?.data?.fulfillmentText;
-        const quickReplies = result?.data?.data?.quickReplies;
-        text?.map((item) =>
-          setMessages((old) => [
-            ...old,
-            {
-              from: "computer",
-              text:
-                item ||
-                "Sorry i am facing a technical glitch, please checkout our website for more details about our services",
-              quickReplies: quickReplies,
-            },
-          ])
-        );
-      })
-      .catch((err) => {
-        setMessages((old) => [
+    setTimeout(() => {
+      if (answersLength.length <= formatedQuestions.length) {
+        return setMessages((old) => [
           ...old,
-          { from: "computer", text: "Sorry i am currently offline" },
+          formatedQuestions[answersLength.length + 1],
         ]);
-      });
+      }
+    }, 1000);
   };
 
   return (

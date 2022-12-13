@@ -1,6 +1,6 @@
 import { keyframes } from "@emotion/react";
 
-const dev = "http://192.168.100.211:4000";
+const dev = "http://localhost:4000";
 const prod = "https://spera-bot-production.up.railway.app/";
 
 export const URL =

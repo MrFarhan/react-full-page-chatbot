@@ -37,31 +37,15 @@ const Messages = ({ messages, setMessages }) => {
       }}
     >
       {messages.map((item, index) => {
-        if (item.from === "me") {
+        console.log("messagesmessages", messages);
+        if (item?.from === "Computer") {
           return (
-            <Flex key={index} w="100%" justify="flex-end">
-              <Flex
-                bg="#8756ff"
-                borderRadius={"5px"}
-                color="white"
-                minW="100px"
-                maxW="350px"
-                my="1"
-                p="3"
-              >
-                {/* {Audio is added in case of future feature of audio player} */}
-                {item.type === "inputAudio" ? (
-                  <audio src={item?.inputAudio?.blobURL} controls />
-                ) : (
-                  // {Text messages from opposit user}
-                  <Text>{item.text}</Text>
-                )}
-              </Flex>
-            </Flex>
-          );
-        } else {
-          return (
-            <Flex key={index} w="100%" mt={"5px"} sx={{ alignItems: "flex-end" }}>
+            <Flex
+              key={index}
+              w="100%"
+              mt={"5px"}
+              sx={{ alignItems: "flex-end" }}
+            >
               <Avatar
                 name="Computer"
                 src={
@@ -108,6 +92,28 @@ const Messages = ({ messages, setMessages }) => {
                   </Box>
                 )}
               </Box>
+            </Flex>
+          );
+        } else {
+          return (
+            <Flex key={index} w="100%" justify="flex-end">
+              <Flex
+                bg="#8756ff"
+                borderRadius={"5px"}
+                color="white"
+                minW="100px"
+                maxW="350px"
+                my="1"
+                p="3"
+              >
+                {/* {Audio is added in case of future feature of audio player} */}
+                {item.type === "inputAudio" ? (
+                  <audio src={item?.inputAudio?.blobURL} controls />
+                ) : (
+                  // {Text messages from opposit user}
+                  <Text>{item.text}</Text>
+                )}
+              </Flex>
             </Flex>
           );
         }

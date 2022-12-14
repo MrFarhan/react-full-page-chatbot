@@ -24,7 +24,6 @@ const Messages = ({ messages, setMessages }) => {
       // overflowY="scroll"
       flexDirection="column"
       p="3"
-      w="100%"
       mt="5"
       display={"flex"}
       align={"center"}
@@ -68,7 +67,11 @@ const Messages = ({ messages, setMessages }) => {
                   <Flex display={"block"} align={"center"}>
                     <Box>
                       {/*  {Text messages from Computer / chatbot} */}
-                      <Text>{item.text}</Text>
+                      <Text
+                        dangerouslySetInnerHTML={{
+                          __html: String(item.text).replaceAll(/\n/g, "<br />"),
+                        }}
+                      ></Text>
                     </Box>
                   </Flex>
                 </Flex>
@@ -111,7 +114,7 @@ const Messages = ({ messages, setMessages }) => {
                   <audio src={item?.inputAudio?.blobURL} controls />
                 ) : (
                   // {Text messages from opposit user}
-                  <Text>{item.text}</Text>
+                  <Text sx={{ wordBreak: "break-all" }}>{item.text}</Text>
                 )}
               </Flex>
             </Flex>

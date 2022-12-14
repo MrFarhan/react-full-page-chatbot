@@ -10,6 +10,7 @@ const ChatbotFooter = ({
   setInputMessage,
   handleSendMessage,
   setMessages,
+  disable,
 }) => {
   const isInputEmpty = inputMessage?.trim().length > 0;
   const [voiceConvertedText, setVoiceConvertedText] = useState();
@@ -78,15 +79,17 @@ const ChatbotFooter = ({
         _focus={{
           border: "1px solid black",
         }}
+        isDisabled={disable}
         onKeyPress={(e) => {
           if (e.key === "Enter") {
             handleSendMessage();
           }
         }}
+        maxLength={250}
         value={inputMessage}
         onChange={(e) => setInputMessage(e.target.value)}
       />
-      {isInputEmpty ? (
+      {isInputEmpty || disable? (
         <Button
           rightIcon={<SendIcon w={8} h={8} color="black" />}
           variant="solid"
@@ -94,6 +97,7 @@ const ChatbotFooter = ({
           className="sendButton"
           _hover={"transparent"}
           onClick={handleSendMessage}
+          isDisabled={disable}
         >
           {/* {Chatbot send  button} */}
           {/* Send */}

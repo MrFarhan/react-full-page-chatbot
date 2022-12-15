@@ -1,14 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Routes, Route, useParams, useSearchParams } from "react-router-dom";
+import { Routes, Route,  useSearchParams } from "react-router-dom";
 import Chat from "./Pages/Chat";
 import Welcome from "./Pages/Welcome";
 import { URL } from "./utils/constant";
 
 function Routing() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  // eslint-disable-next-line
+  const [searchParams, _] = useSearchParams();
   const surveyId = searchParams.get("surveyId");
   const clientId = searchParams.get("clientId");
+  const sheetId = searchParams.get("sheetId");
+  const tabId = searchParams.get("tabId");
   const [questions, setQuestions] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -30,15 +33,20 @@ function Routing() {
         console.log("error is", err);
         setLoading(false);
       });
-  }, []);
+  }, [clientId,surveyId]);
 
   return (
     <Routes>
       <Route
         path="*"
         element={
-          surveyId && clientId && !loading && !!questions?.length ? (
-            <Chat questions={questions}/>
+          surveyId &&
+          clientId &&
+          sheetId &&
+          tabId &&
+          !loading &&
+          !!questions?.length ? (
+            <Chat questions={questions} />
           ) : (
             <Welcome loading={loading} />
           )

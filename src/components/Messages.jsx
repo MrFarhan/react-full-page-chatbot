@@ -36,7 +36,6 @@ const Messages = ({ messages, setMessages }) => {
       }}
     >
       {messages.map((item, index) => {
-        console.log("messagesmessages", messages);
         if (item?.from === "Computer") {
           return (
             <Flex

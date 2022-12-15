@@ -1,15 +1,10 @@
 import {
   Box,
   Flex,
-  Button,
   useColorModeValue,
-  Stack,
-  useColorMode,
 } from "@chakra-ui/react";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 export default function Nav() {
-  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <>
       <Box
@@ -29,14 +24,6 @@ export default function Nav() {
           top={0}
         >
           <Box>The Info Tech</Box>
-
-          {/* <Flex alignItems={"center"}>
-            <Stack direction={"row"} spacing={7}>
-              <Button onClick={toggleColorMode}>
-                {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-              </Button>
-            </Stack>
-          </Flex> */}
         </Flex>
       </Box>
     </>

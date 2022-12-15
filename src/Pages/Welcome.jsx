@@ -6,13 +6,23 @@ import {
   Button,
   Stack,
   Icon,
-  useColorModeValue,
   createIcon,
 } from "@chakra-ui/react";
+import { Spinner } from "@chakra-ui/react";
 
 export default function Welcome({ loading }) {
   return loading ? (
-    "Loading"
+    <Container
+      maxW={"3xl"}
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "90vh",
+      }}
+    >
+      <Spinner size="xl" />
+    </Container>
   ) : (
     <>
       <Container maxW={"3xl"}>

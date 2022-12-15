@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Routes, Route,  useSearchParams } from "react-router-dom";
+import { Routes, Route, useSearchParams } from "react-router-dom";
 import Chat from "./Pages/Chat";
-import Welcome from "./Pages/Welcome";
+import PageNotFound from "./Pages/PageNotFound";
 import { URL } from "./utils/constant";
 
 function Routing() {
@@ -33,7 +33,7 @@ function Routing() {
         console.log("error is", err);
         setLoading(false);
       });
-  }, [clientId,surveyId]);
+  }, [clientId, surveyId]);
 
   return (
     <Routes>
@@ -48,7 +48,7 @@ function Routing() {
           !!questions?.length ? (
             <Chat questions={questions} />
           ) : (
-            <Welcome loading={loading} />
+            <PageNotFound loading={loading} />
           )
         }
       />

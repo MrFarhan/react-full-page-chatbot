@@ -11,7 +11,7 @@ function Chatbot({ questions }) {
     from: "Computer",
     text: item,
   }));
-  
+
   // eslint-disable-next-line
   const [searchParams, _] = useSearchParams();
   const surveyId = searchParams.get("surveyId");
@@ -31,7 +31,7 @@ function Chatbot({ questions }) {
 
   // send button handler
   let answers = messages?.filter((item) => item?.from === "me");
-  const isInputDisabled = answers.length >= formatedQuestions.length - 1;
+  const isInputDisabled = answers.length >= formatedQuestions.length;
 
   const SaveAnswers = (prevAns) => {
     axios
@@ -46,7 +46,7 @@ function Chatbot({ questions }) {
   const handleSendMessage = () => {
     let previousAnswers = [...answers];
     // extra validation if disable button is removed
-    if (answers.length >= formatedQuestions.length - 1) {
+    if (answers.length >= formatedQuestions.length) {
       return setMessages((old) => [
         ...old,
         { from: "Computer", text: "Thank you for filling this survey" },
@@ -57,18 +57,17 @@ function Chatbot({ questions }) {
       return;
     }
 
-    const data = inputMessage;
-    setMessages((old) => [...old, { from: "me", text: data }]);
+    setMessages((old) => [...old, { from: "me", text: inputMessage }]);
     setInputMessage("");
 
     // automaticly send computer message after 1 minute interval
     setTimeout(() => {
-      if (answers.length <= formatedQuestions.length) {
+      if (answers.length < formatedQuestions.length-1) {
         setMessages((old) => [...old, formatedQuestions[answers.length + 1]]);
       }
       // checks for last answer, answers array starts from 0
-      if (answers.length === formatedQuestions.length - 2) {
-        previousAnswers.push({ from: "me", text: data });
+      if (answers.length === formatedQuestions.length-1) {
+        previousAnswers.push({ from: "me", text: inputMessage });
         SaveAnswers(previousAnswers);
       }
     }, 1000);

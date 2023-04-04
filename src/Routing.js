@@ -26,7 +26,7 @@ function Routing() {
     })
       .then(function (response) {
         console.log("response is", response.data);
-        setQuestions(response.data.response.Questions);
+        setQuestions(response.data.response);
         setLoading(false);
       })
       .catch((err) => {
@@ -34,7 +34,6 @@ function Routing() {
         setLoading(false);
       });
   }, [clientId, surveyId]);
-
   return (
     <Routes>
       <Route
